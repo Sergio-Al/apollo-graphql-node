@@ -1,0 +1,31 @@
+{
+  "name": "node-apollo-express",
+  "version": "1.0.0",
+  "description": "A node project with apollo and express",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Sergio-Al",
+  "license": "ISC",
+  "devDependencies": {
+    "apollo": "^2.33.9",
+    "apollo-link": "^1.2.14",
+    "apollo-link-http": "^1.5.17",
+    "nock": "^13.2.2",
+    "node-fetch": "^3.2.0",
+    "nodemon": "^2.0.15"
+  },
+  "dependencies": {
+    "apollo-datasource": "^3.3.1",
+    "apollo-datasource-rest": "^3.5.1",
+    "apollo-server": "^3.6.2",
+    "dotenv": "^14.2.0",
+    "graphql": "^16.2.0",
+    "isemail": "^3.2.0",
+    "sequelize": "^6.14.0"
+  }
+}
