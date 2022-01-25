@@ -1,5 +1,6 @@
 import { ApolloServer, gql } from "apollo-server";
 import { config } from "dotenv";
+import { v4 as uuidV4 } from "uuid";
 
 config();
 
@@ -29,8 +30,6 @@ let messages = {
   },
 };
 
-const me = users[1];
-
 const schema = gql`
   type Query {
     users: [User!]
@@ -52,6 +51,12 @@ const schema = gql`
     text: String!
     user: User!
   }
+
+  type Mutation {
+    createMessage(text: String!): Message!
+    deleteMessage(id: ID!): Boolean!
+    updateMessage(id: ID!, text: String!): Message!
+  }
 `;
 
 const resolvers = {
@@ -68,6 +73,35 @@ const resolvers = {
   User: {
     messages: (user) =>
       Object.values(messages).filter((message) => message.userId === user.id),
+  },
+  Mutation: {
+    createMessage: (parent, { text }, { me }) => {
+      const id = uuidV4();
+      const message = { id, text, userId: me.id };
+
+      // updating our sample data, this is normally a write action to the database
+      messages[id] = message;
+      users[me.id].messageIds.push(id);
+
+      return message;
+    },
+    deleteMessage: (parent, { id }) => {
+      const { [id]: message, ...otherMessages } = messages;
+
+      if (!message) return false;
+
+      messages = otherMessages;
+
+      return true;
+    },
+    updateMessage: (parent, { id, text }) => {
+      const { [id]: message } = messages;
+
+      // This must be an operation with a database or another service
+      message.text = text;
+
+      return message;
+    },
   },
 };
 
