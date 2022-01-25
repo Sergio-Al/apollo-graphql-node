@@ -21,6 +21,10 @@ export default {
       const { [id]: message, ...otherMessages } = messages;
       if (!message) return false;
 
+      // i can't directly modify an imported value 
+      // due to: IMMUTABLE EXPORTED MODULE VALUES
+      // In order to fix that i'm using a function 
+      // that changes the value of my imported value
       modifyMessages(otherMessages);
 
       return true;

@@ -24,6 +24,8 @@ export let messages = {
   },
 };
 
+// This funciton can change the value of message when they are
+// exported to another file
 export function modifyMessages(value) {
   messages = value;
 }
